@@ -1,0 +1,83 @@
+---
+- name: Install Apache and Configure Timezone
+  hosts: web_servers
+  become: true
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Ensure Apache service is running
+      service:
+        name: apache2
+        state: started
+
+    - name: Set Timezone to Africa/Lagos
+      timezone:
+        name: Africa/Lagos
+
+    - name: Change contents of the file
+      command: echo "<h1>I Love you</h1>" > /var/www/html/index.html
+
+    - name: Ensure Apache service is restarted
+      service:
+        name: apache2
+        state: restarted
+
+- name: Install Apache and Configure Timezone
+  hosts: database_servers
+  become: true 
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: latest
+
+    - name: Ensure Apache Service is running 
+      service:
+        name: apache2
+        state: started
+
+    - name: Set Timezone to Africa/Lagos
+      timezone:    
+        name: Africa/Lagos   
+
+    - name: Ensure Apache is restarted
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Create Content 
+      copy:
+        content: echo "<h1>Welcome to Page2</h1>" > /var/www/html/index.html    
+
+- name: Install Apache and configure Timezone
+  hosts: server
+  become: true
+  tasks:
+    - name: Install Apache
+      apt: 
+         name: apache2
+         state: present
+
+    - name: Ensure Apache service is running
+      service:
+        name: apache2
+        service: started
+
+    - name: Ensure Apache service is restarted
+      service: 
+        name: apache2
+        service: started
+
+    - name: Set Timezone to Africa/Lagos
+      timezone:
+        name: Africa/Lagos
+
+    - name: Add a sample file
+      command: echo "<h1>Welcome to Page3</h1>" > /var/www/html/index.html
+
+
+          
+        
